@@ -38,11 +38,20 @@ class App extends Component {
     };
 
     handleDelete = async (post) => {
-        await axios.delete(apiEndpoint + "/" + post.id);
+        let originalPosts = this.state.posts;
 
         const posts = this.state.posts.filter((p) => p.id !== post.id);
         this.setState({ posts });
-        console.log("Delete", post);
+
+        try {
+            await axios.delete(apiEndpoint + "/" + post.id);
+            throw new Error("busy...!!!");
+        } catch (ex) {
+            alert("Server busy...");
+            this.setState({ posts: originalPosts });
+        }
+
+        // console.log("Delete", post);
     };
 
     render() {
