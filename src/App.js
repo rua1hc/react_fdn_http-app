@@ -24,8 +24,17 @@ class App extends Component {
         this.setState({ posts });
     };
 
-    handleUpdate = (post) => {
-        console.log("Update", post);
+    handleUpdate = async (post) => {
+        post.title = "Updated put()!";
+        const { data } = await axios.put(apiEndpoint + "/" + post.id, post);
+        // console.log(data);
+
+        // await axios.patch(apiEndpoint + "/" + post.id, { title: post.title });
+
+        let posts = [...this.state.posts];
+        const index = posts.indexOf(post);
+        posts[index] = { ...post };
+        this.setState({ posts });
     };
 
     handleDelete = (post) => {
