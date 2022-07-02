@@ -3,6 +3,9 @@ import React, { Component } from "react";
 import http from "./services/httpService";
 import config from "./config.json";
 
+import { ToastContainer } from "react-toastify";
+
+import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
 
 // const apiEndpoint = "https://jsonplaceholder.typicode.com/posts";
@@ -49,7 +52,7 @@ class App extends Component {
         this.setState({ posts });
 
         try {
-            await http.delete(config.apiEndpoint + "/" + post.id);
+            await http.delete("s" + config.apiEndpoint + "/" + post.id);
         } catch (ex) {
             // EXPECTED ERROR: 400 bad request, 404 not found
             // - Display specific error message
@@ -68,6 +71,7 @@ class App extends Component {
     render() {
         return (
             <React.Fragment>
+                <ToastContainer />
                 <button className="btn btn-primary" onClick={this.handleAdd}>
                     Add
                 </button>
